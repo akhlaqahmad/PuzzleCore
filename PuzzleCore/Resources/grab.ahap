@@ -1,0 +1,20 @@
+{
+    "Version": 1.0,
+    "Metadata": {
+        "Project": "PuzzleCore",
+        "Created": "2026-01-23",
+        "Description": "Soft grab sensation"
+    },
+    "Pattern": [
+        {
+            "Event": {
+                "Time": 0.0,
+                "EventType": "HapticTransient",
+                "EventParameters": [
+                    { "ParameterID": "HapticIntensity", "ParameterValue": 0.5 },
+                    { "ParameterID": "HapticSharpness", "ParameterValue": 0.3 }
+                ]
+            }
+        }
+    ]
+}
