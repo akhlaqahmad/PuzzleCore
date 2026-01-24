@@ -4,7 +4,7 @@ This repository contains the Phase-0 vertical slice for the PuzzleCore 3D puzzle
 
 ## Demo
 
-https://github.com/user-attachments/assets/demo.MP4
+[https://github.com/user-attachments/assets/demo.MP4](https://github.com/akhlaqahmad/PuzzleCore/blob/main/demo.MP4)
 
 *(Note: The `demo.MP4` file is located in the root directory of this repository.)*
 
