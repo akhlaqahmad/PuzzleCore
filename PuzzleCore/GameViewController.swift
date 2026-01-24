@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
     private var scnView: SCNView!
     private var scene: SCNScene!
     private var cameraNode: SCNNode!
-    private var gridNode: SCNNode!
+    private var gridNode = SCNNode()
     private var pieceNode: SCNNode!
     
     // MARK: - Game State
@@ -33,10 +33,16 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("GameViewController: viewDidLoad")
         setupScene()
         setupGrid()
         spawnPiece()
         setupGestures()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("GameViewController: viewDidLayoutSubviews frame=\(view.frame) scnView=\(scnView.frame)")
     }
     
     // MARK: - Setup
@@ -44,8 +50,8 @@ class GameViewController: UIViewController {
     private func setupScene() {
         scnView = SCNView(frame: view.bounds)
         scnView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        scnView.backgroundColor = .black
-        scnView.allowsCameraControl = false // We handle gestures
+        scnView.backgroundColor = .darkGray // Visible background for debugging
+        scnView.allowsCameraControl = true // Enable camera control for debugging
         view.addSubview(scnView)
         
         scene = SCNScene()
@@ -73,7 +79,7 @@ class GameViewController: UIViewController {
     }
     
     private func setupGrid() {
-        gridNode = SCNNode()
+        // gridNode is already initialized
         
         // 4x4 Grid
         // Visual representation: Checkers or lines

@@ -54,6 +54,53 @@ final class PuzzleCoreTests: XCTestCase {
         XCTAssertEqual(state360.rotation, .r0)
     }
     
+    // MARK: - Grid Tests
+
+    func testGridStateLocking() {
+        var grid = GridState(size: GridSize(width: 4, height: 4))
+        
+        // Initially empty
+        XCTAssertFalse(grid.isOccupied(at: Cell(x: 0, y: 0)))
+        XCTAssertFalse(grid.isOccupied(at: Cell(x: 3, y: 3)))
+        
+        // Lock some cells
+        let cellsToLock = [Cell(x: 1, y: 1), Cell(x: 2, y: 2)]
+        grid.lock(cells: cellsToLock)
+        
+        // Verify locked
+        XCTAssertTrue(grid.isOccupied(at: Cell(x: 1, y: 1)))
+        XCTAssertTrue(grid.isOccupied(at: Cell(x: 2, y: 2)))
+        
+        // Verify others still empty
+        XCTAssertFalse(grid.isOccupied(at: Cell(x: 0, y: 0)))
+        XCTAssertFalse(grid.isOccupied(at: Cell(x: 1, y: 2)))
+    }
+    
+    func testTShapeRotation() {
+        // T Shape: (0,0), (1,0), (2,0), (1,1)
+        // Center-ish is (1,0) if we consider bounding box? No, anchor is (0,0).
+        let shape = PieceShape.shapeT
+        let anchor = Cell(x: 1, y: 1)
+        
+        // 0 deg: (1,1), (2,1), (3,1), (2,2)
+        let state0 = PieceState(anchor: anchor, rotation: .r0)
+        let cells0 = PuzzleEngine.transformedCells(shape: shape, state: state0)
+        XCTAssertTrue(cells0.contains(Cell(x: 1, y: 1)))
+        XCTAssertTrue(cells0.contains(Cell(x: 2, y: 1)))
+        XCTAssertTrue(cells0.contains(Cell(x: 3, y: 1)))
+        XCTAssertTrue(cells0.contains(Cell(x: 2, y: 2)))
+        
+        // 90 deg: (x,y) -> (-y, x)
+        // (0,0)->(0,0), (1,0)->(0,1), (2,0)->(0,2), (1,1)->(-1,1)
+        // Anchor (1,1) -> (1,1), (1,2), (1,3), (0,2)
+        let state90 = PuzzleEngine.rotate(state0)
+        let cells90 = PuzzleEngine.transformedCells(shape: shape, state: state90)
+        XCTAssertTrue(cells90.contains(Cell(x: 1, y: 1)))
+        XCTAssertTrue(cells90.contains(Cell(x: 1, y: 2)))
+        XCTAssertTrue(cells90.contains(Cell(x: 1, y: 3)))
+        XCTAssertTrue(cells90.contains(Cell(x: 0, y: 2)))
+    }
+
     // MARK: - Validation Tests
     
     func testValidationBounds() {
