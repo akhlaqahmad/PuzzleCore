@@ -22,6 +22,8 @@ The project is divided into two parts:
     -   Ensure `grab.ahap`, `snap.ahap`, and `invalid.ahap` are in the **Copy Bundle Resources** build phase of the App Target.
     -   These files are located in `PuzzleCore/Resources/`.
 
+    ![Project Structure](img.png)
+
 ## Running Tests
 
 To run the unit tests for the logic core and the app:
